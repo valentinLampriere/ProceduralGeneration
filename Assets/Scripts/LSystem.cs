@@ -4,11 +4,18 @@ using System.Text;
 using UnityEngine;
 
 public class LSystem {
-    public static string Iterate(Rules rules, string axiom) {
-        StringBuilder next = new StringBuilder(axiom);
-        foreach (char c in axiom) {
-            next.Append(rules[c]);
+    public static List<Rule> Iterate(Rules rules, List<Rule> axiom) {
+        List<Rule> next = new List<Rule>();
+
+        Debug.Log(TestTree.iteration++);
+        foreach(Rule r in axiom) {
+            foreach (Rule rn in rules[r]) {
+                next.Add(rn);
+
+                rn.Run();
+            }
+            Debug.Log(r);
         }
-        return next.ToString();
+        return next;
     }
 }

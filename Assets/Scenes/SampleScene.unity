@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 1870420833}
   - component: {fileID: 1870420834}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TestTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -339,3 +339,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11326a82b5cfdc249a0b4e2a776c28c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawLine: {fileID: 7186716629273063686, guid: 12cf4768f54fc2b44aaf5b2b9de762bf,
+    type: 3}
+  turnLeft: {fileID: 3075035782717208793, guid: 910593a6f0c6b8942974971baaeceeec,
+    type: 3}
+  _origin: {x: 0, y: 0, z: 0}
+  _end: {x: 0, y: 1, z: 0}

@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rule : MonoBehaviour {
-    void Start() {
-        
-    }
-    void Update() {
-        
-    }
+public abstract class Rule : MonoBehaviour {
+    public virtual void Start() { }
+    public abstract void Run();
 }
