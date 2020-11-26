@@ -4,17 +4,16 @@ using System.Text;
 using UnityEngine;
 
 public class LSystem {
-    public static List<Rule> Iterate(Rules rules, List<Rule> axiom) {
+    public static List<Rule> Iterate(Rules rules, List<Rule> axiom, TestTree tree) {
         List<Rule> next = new List<Rule>();
 
-        Debug.Log(TestTree.iteration++);
-        foreach(Rule r in axiom) {
-            foreach (Rule rn in rules[r]) {
-                next.Add(rn);
-
-                rn.Run();
+        foreach (Rule r in axiom) {
+            if (rules.ContainsKey(r)) {
+                foreach (Rule rn in rules[r]) {
+                    next.Add(rn);
+                    rn.Run(tree);
+                }
             }
-            Debug.Log(r);
         }
         return next;
     }
