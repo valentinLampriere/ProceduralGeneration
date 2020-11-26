@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class SaveState : Rule {
     public override void Run(TestTree tree) {
-        tree.savedLine.Add(tree.currentLine);
-        tree.currentLine = tree.createNewLine(tree.currentLine);
+        tree.savedVectors.Add(tree.vector);
+    }
+
+    public override char Char() {
+        return '[';
     }
 
     public override string ToString() {

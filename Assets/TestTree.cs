@@ -3,57 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Pair<T> {
+public class Vector {
 
-    public T first;
-    public T second;
+    public Vector3 origin;
+    public Vector3 direction;
 
-    public Pair(T first, T second) {
-        this.first = first;
-        this.second = second;
+    public Vector(Vector3 origin, Vector3 direction) {
+        this.origin = origin;
+        this.direction = direction;
     }
 }
 
 public class TestTree : MonoBehaviour {
 
-    private Rules rules;
+    private RuleSet rules;
     private List<Rule> axiom;
+
+    public static Dictionary<char, Rule> ExistingRules = new Dictionary<char, Rule> {
+        { 'F', new DrawLine() },
+        { 'G', new MoveForward() },
+        { '+', new TurnRight() },
+        { '-', new TurnLeft() },
+        { '[', new SaveState() },
+        { ']', new LoadState() },
+    };
 
     public GameObject line;
 
-    //public Pair<Vector3> position;
-
-    public LineRenderer currentLine;
-    public List<LineRenderer> savedLine;
+    public Vector vector { get; set; }
+    public List<Vector> savedVectors { get; set; }
+    //public LineRenderer currentLine;
+    //public List<LineRenderer> savedLine;
 
     public float sizeLine = 0.5f;
+    public float angle { get; set; } = 90;
 
     void Start() {
 
-        DrawLine dl = new DrawLine();
-        TurnLeft tl = new TurnLeft();
-        TurnRight tr = new TurnRight();
-        MoveForward mf = new MoveForward();
-        SaveState ss = new SaveState();
-        LoadState ls = new LoadState();
+        vector = new Vector(new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+        savedVectors = new List<Vector>();
 
-        //position = new Pair<Vector3>(new Vector3(0, 0, 0), new Vector3(0, 1 * sizeLine, 0));
-        savedLine = new List<LineRenderer>();
+        rules = new RuleSet();
 
-        /* 
-        axiom = new List<Rule>() { dl };
-        rules = new Rules() {
-            { dl, new List<Rule>() { dl, dl, tr, ss, tr, dl, tl, dl, tl, dl,  ls, tl, ss, tl, dl, tr, dl, tr, dl, ls } },
-        };*/
-        /* sponge */
-        axiom = new List<Rule>() { dl, tl, dl, tl, dl, tl, dl, tl };
-        rules = new Rules() {
-            { dl, new List<Rule>() { dl, ss, dl, ls, tl, dl, tr, dl, ss, tl, tl, dl, ls, tr, dl, tl, dl } },
-        };
+        axiom = Rule.GetRulesFromString("F");
+        rules.AddRule('F', "FF+[+F-F-F]-[-F+F+F]");
 
-        foreach (Rule r in axiom) {
-            r.Run(this);
-        }
     }
 
     void Update() {
@@ -62,14 +56,12 @@ public class TestTree : MonoBehaviour {
         }
     }
 
-    public LineRenderer createNewLine(LineRenderer lr = null) {
+    public void createNewLine(Vector vector = null) {
         GameObject g = Instantiate(line, transform);
-        //LineRenderer lineRenderer = g.AddComponent<LineRenderer>();
         LineRenderer lineRenderer = g.GetComponent<LineRenderer>();
-        if (lr != null) {
-            lineRenderer.SetPosition(0, lr.GetPosition(lr.positionCount - 2));
-            lineRenderer.SetPosition(0, lr.GetPosition(lr.positionCount - 1));
+        if (vector != null) {
+            lineRenderer.SetPosition(0, vector.origin);
+            lineRenderer.SetPosition(1, vector.origin + vector.direction * sizeLine);
         }
-        return lineRenderer;
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 using UnityEngine;
 
 public class LSystem {
-    public static List<Rule> Iterate(Rules rules, List<Rule> axiom, TestTree tree) {
+    public static List<Rule> Iterate(RuleSet rules, List<Rule> axiom, TestTree tree) {
         List<Rule> next = new List<Rule>();
 
         foreach (Rule r in axiom) {

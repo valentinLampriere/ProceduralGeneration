@@ -8,31 +8,23 @@ public class DrawLine : Rule {
 
 
     public override void Run(TestTree tree) {
-        Vector3 origin, end, direction;
+        GameObject line = new GameObject();
+        LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
+        lineRenderer.material = new Material(Shader.Find("Particles/Standard Unlit"));
+        lineRenderer.startColor = Color.green;
+        lineRenderer.endColor = Color.green;
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
 
-        if (tree.currentLine == null)
-            tree.currentLine = tree.createNewLine();
-        else {
-            origin = tree.currentLine.GetPosition(tree.currentLine.positionCount - 2);
-            end = tree.currentLine.GetPosition(tree.currentLine.positionCount - 1);
+        lineRenderer.SetPosition(0, tree.vector.origin);
+        lineRenderer.SetPosition(1, tree.vector.origin + tree.vector.direction * tree.sizeLine);
 
-            direction = (end - origin).normalized;
 
-            tree.currentLine.positionCount += 1;
+        tree.vector.origin = tree.vector.origin + tree.vector.direction * tree.sizeLine;
+    }
 
-            tree.currentLine.SetPosition(tree.currentLine.positionCount - 1, end + direction * tree.sizeLine);
-        }
-        /*Instantiate(gameObject, tree.position.first, Quaternion.identity);
-
-        lr.SetPosition(0, tree.position.first);
-        lr.SetPosition(1, tree.position.second);
-
-        origin = tree.position.second;
-        direction = (tree.position.second - tree.position.first).normalized;
-        end = origin + direction * tree.sizeLine;
-        tree.position.first = origin;
-        tree.position.second = end;
-        */
+    public override char Char() {
+        return 'F';
     }
 
     public override string ToString() {

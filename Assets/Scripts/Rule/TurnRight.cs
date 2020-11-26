@@ -4,18 +4,11 @@ using UnityEngine;
 
 public class TurnRight: Rule {
     public override void Run(TestTree tree) {
-        Vector3 origin, end, direction;
+        tree.vector.direction = Quaternion.Euler(0, 0, -tree.angle) * tree.vector.direction;
+    }
 
-        origin = tree.currentLine.GetPosition(tree.currentLine.positionCount - 2);
-        end = tree.currentLine.GetPosition(tree.currentLine.positionCount - 1);
-        direction = end - origin;
-        direction = Quaternion.Euler(0, 0, -90) * direction;
-        tree.currentLine.SetPosition(tree.currentLine.positionCount - 1, direction + origin);
-        /*
-        Vector3 dir = tree.position.second - tree.position.first;
-        dir = Quaternion.Euler(0, 0, -45) * dir;
-        tree.position.second = dir + tree.position.first;
-        */
+    public override char Char() {
+        return '+';
     }
 
     public override string ToString() {

@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class MoveForward : Rule {
     public override void Run(TestTree tree) {
-        /*Vector3 origin, end, direction;
+        tree.vector.origin = tree.vector.origin + tree.vector.direction * tree.sizeLine;
+    }
 
-        origin = tree.position.second;
-        direction = (tree.position.second - tree.position.first).normalized;
-        end = origin + direction * tree.sizeLine;
-        tree.position.first = origin;
-        tree.position.second = end;
-        */
+    public override char Char() {
+        return 'G';
     }
 
     public override string ToString() {
