@@ -10,8 +10,4 @@ public class TurnLeft : Rule {
     public override char Char() {
         return '-';
     }
-
-    public override string ToString() {
-        return "TurnLeft";
-    }
 }

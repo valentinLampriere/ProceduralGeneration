@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class SaveState : Rule {
     public override void Run(TestTree tree) {
-        tree.savedVectors.Add(tree.vector);
+        Vector v = new Vector(tree.vector.origin, tree.vector.direction);
+        tree.savedVectors.Add(v);
     }
 
     public override char Char() {
         return '[';
-    }
-
-    public override string ToString() {
-        return "SaveState";
     }
 }

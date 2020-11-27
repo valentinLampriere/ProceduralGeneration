@@ -9,6 +9,7 @@ public class DrawLine : Rule {
 
     public override void Run(TestTree tree) {
         GameObject line = new GameObject();
+        line.transform.parent = GameObject.Find("TestTree").transform;
         LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Particles/Standard Unlit"));
         lineRenderer.startColor = Color.green;
@@ -25,9 +26,5 @@ public class DrawLine : Rule {
 
     public override char Char() {
         return 'F';
-    }
-
-    public override string ToString() {
-        return "DrawLine";
     }
 }

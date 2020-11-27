@@ -11,12 +11,18 @@ public abstract class Rule {
     public static List<Rule> GetRulesFromString(string sentence) {
         List<Rule> rules = new List<Rule>();
         foreach (char _c in sentence) {
-            Rule r = TestTree.ExistingRules[_c];
-            if (r != null) {
-                rules.Add(r);
+            if (TestTree.ExistingRules.ContainsKey(_c)) {
+                Rule r = TestTree.ExistingRules[_c];
+                if (r != null) {
+                    rules.Add(r);
+                }
             }
         }
         return rules;
     }
 
+
+    public override string ToString() {
+        return Char().ToString();
+    }
 }

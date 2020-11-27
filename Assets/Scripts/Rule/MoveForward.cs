@@ -10,8 +10,4 @@ public class MoveForward : Rule {
     public override char Char() {
         return 'G';
     }
-
-    public override string ToString() {
-        return "MoveForward";
-    }
 }

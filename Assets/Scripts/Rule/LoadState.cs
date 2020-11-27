@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class LoadState : Rule {
     public override void Run(TestTree tree) {
+        if (tree.savedVectors.Count == 0) return;
         Vector v = tree.savedVectors[tree.savedVectors.Count - 1];
-        if (v != null) {
-            tree.vector = tree.savedVectors[tree.savedVectors.Count - 1];
-            tree.savedVectors.RemoveAt(tree.savedVectors.Count - 1);
-        }
+        tree.vector = new Vector(v.origin, v.direction);
+        tree.savedVectors.RemoveAt(tree.savedVectors.Count - 1);
     }
 
     public override char Char() {
         return ']';
-    }
-
-    public override string ToString() {
-        return "LoadState";
     }
 }
