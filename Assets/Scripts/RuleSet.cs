@@ -8,6 +8,13 @@ public class RuleSet : Dictionary<Rule, List<Rule>> {
     }
 
     public void AddRule(char c, string sentence) {
-        AddRule(TestTree.ExistingRules[c], Rule.GetRulesFromString(sentence));
+        Rule r;
+        if (TestTree.ExistingRules.ContainsKey(c))
+            r = TestTree.ExistingRules[c];
+        else {
+            r = new UnknownRule(c);
+            TestTree.ExistingRules[c] = r;
+        }
+        AddRule(r, Rule.GetRulesFromString(sentence));
     }
 }

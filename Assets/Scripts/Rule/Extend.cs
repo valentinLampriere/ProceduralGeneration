@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnLeft : Rule {
+public class Extend : Rule {
     public override void Run(TestTree tree) {
-        tree.vector.direction = Quaternion.Euler(0, 0, tree.angle + Random.Range(-25, 25)) * tree.vector.direction;
+        Vector v = new Vector(tree.vector.origin, tree.vector.direction);
+        tree.sizeLine *= tree.lengthScaleFactor;
     }
 
     public override char Char() {
-        return '-';
+        return '>';
     }
 }

@@ -30,15 +30,16 @@ public class TestTree : MonoBehaviour {
         { '-', new TurnLeft() },
         { '[', new SaveState() },
         { ']', new LoadState() },
+        { '>', new Extend() },
+        { '<', new Reduce() }
     };
-
-    public GameObject line;
 
     public Vector vector { get; set; }
     public List<Vector> savedVectors { get; set; }
 
     public float sizeLine = 0.5f;
-    public float angle { get; set; } = 60;
+    public float angle { get; set; } = 45;
+    public float lengthScaleFactor = 1.36f;
 
     void Start() {
 
@@ -46,16 +47,22 @@ public class TestTree : MonoBehaviour {
         savedVectors = new List<Vector>();
 
         rules = new RuleSet();
-        axiom = Rule.GetRulesFromString("F++F++F");
-        // tree
-        //rules.AddRule('F', "FF+[+F-F-F]-[-F+F+F]");
-        //rules.AddRule('F', "FF+F-F+F+FF");
+        /* bushes
+        axiom = Rule.GetRulesFromString("y");
+        rules.AddRule('x', "x[-FFF][+FFF]Fx");
+        rules.AddRule('y', "yFx[+y][-y]");
+        */
+        /* leaf
+        axiom = Rule.GetRulesFromString("a");
+        rules.AddRule('F', ">F<");
+        rules.AddRule('a', "F[+x]Fb");
+        rules.AddRule('b', "F[-y]Fa");
+        rules.AddRule('x', "a");
+        rules.AddRule('y', "b");
+        */
 
-        // star
-        rules.AddRule('F', "F-F++F-F");
 
-
-        foreach(Rule r in axiom) {
+        foreach (Rule r in axiom) {
             r.Run(this);
         }
     }
@@ -71,16 +78,21 @@ public class TestTree : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
             vector = new Vector();
-            foreach(Transform t in transform) {
+            foreach (Transform t in transform) {
                 Destroy(t.gameObject);
             }
             axiom = LSystem.Iterate(rules, axiom, this);
         }
+        if (Input.GetKeyDown(KeyCode.UpArrow)) {
 
-        string print = "";
-        foreach(Rule r in axiom) {
-            print += r.ToString();
         }
-        Debug.Log(print);
+
+        if (Input.GetKeyDown(KeyCode.DownArrow)) {
+
+        }
+    }
+
+    void CreateLeaf() {
+
     }
 }
