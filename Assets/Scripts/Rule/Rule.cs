@@ -8,8 +8,8 @@ public abstract class Rule {
     public abstract char Char();
 
 
-    public static List<Rule> GetRulesFromString(string sentence) {
-        List<Rule> rules = new List<Rule>();
+    public static Axiom GetRulesFromString(string sentence) {
+        Axiom rules = new Axiom();
         foreach (char _c in sentence) {
             Rule r;
             if (TestTree.ExistingRules.ContainsKey(_c)) {

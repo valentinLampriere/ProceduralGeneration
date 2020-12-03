@@ -14,14 +14,18 @@ public class DrawLine : Rule {
         lineRenderer.material = new Material(Shader.Find("Particles/Standard Unlit"));
         lineRenderer.startColor = Color.green;
         lineRenderer.endColor = Color.green;
-        lineRenderer.startWidth = 0.2f + Random.Range(0.0f, 0.1f);
-        lineRenderer.endWidth = 0.2f + Random.Range(0.0f, 0.1f);
+        lineRenderer.startWidth = 0.5f;
+        lineRenderer.endWidth = 0.5f;        
 
 
         lineRenderer.SetPosition(0, tree.vector.origin);
-        lineRenderer.SetPosition(1, tree.vector.origin + tree.vector.direction * (tree.sizeLine + Random.Range(-tree.sizeLine / 3f, tree.sizeLine / 3f)));
+        //if (tree.enableAlea) {
+            lineRenderer.SetPosition(1, tree.vector.origin + tree.vector.direction + tree.vector.direction * (tree.sizeLine + Random.Range(-tree.sizeLine * tree.AleaDegree, tree.sizeLine * tree.AleaDegree)));
+            lineRenderer.SetPosition(1, Quaternion.Euler(0, 0, Random.Range(-tree.angle * tree.AleaDegree, tree.angle * tree.AleaDegree) / (tree.sizeLine * tree.sizeLine * tree.sizeLine)) * lineRenderer.GetPosition(1));
+        //} else {
+        //    lineRenderer.SetPosition(1, tree.vector.origin + tree.vector.direction * tree.sizeLine);
+        //}
 
-        lineRenderer.SetPosition(1, Quaternion.Euler(0, 0, Random.Range(-tree.sizeLine/10f, tree.sizeLine/10f)) * lineRenderer.GetPosition(1));
 
 
         //tree.vector.origin = tree.vector.origin + tree.vector.direction * tree.sizeLine;

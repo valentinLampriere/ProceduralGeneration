@@ -21,7 +21,7 @@ public class Vector {
 public class TestTree : MonoBehaviour {
 
     private RuleSet rules;
-    private List<Rule> axiom;
+    private Axiom axiom;
 
     public static Dictionary<char, Rule> ExistingRules = new Dictionary<char, Rule> {
         { 'F', new DrawLine() },
@@ -31,7 +31,12 @@ public class TestTree : MonoBehaviour {
         { '[', new SaveState() },
         { ']', new LoadState() },
         { '>', new Extend() },
-        { '<', new Reduce() }
+        { '<', new Reduce() },
+        { '^', new PitchUp() },
+        { '&', new PitchDown() },
+        { '\\', new RollLeft() },
+        { '/', new RollRight() },
+        { '?', new If() }
     };
 
     public Vector vector { get; set; }
@@ -40,6 +45,9 @@ public class TestTree : MonoBehaviour {
     public float sizeLine = 0.5f;
     public float angle { get; set; } = 45;
     public float lengthScaleFactor = 1.36f;
+
+    //public bool enableAlea { get; set; } = true;
+    public float AleaDegree { get; set; } = 0f;
 
     void Start() {
 
@@ -52,7 +60,20 @@ public class TestTree : MonoBehaviour {
         rules.AddRule('x', "x[-FFF][+FFF]Fx");
         rules.AddRule('y', "yFx[+y][-y]");
         */
-        /* leaf
+        /* bushes
+        angle = 20;
+        enableAlea = false;
+        axiom = Rule.GetRulesFromString("VZFFF");
+        rules.AddRule('V', "[+++W][---W]YV");
+        rules.AddRule('W', "+X[-W]Z");
+        rules.AddRule('X', "-W[+X]Z");
+        rules.AddRule('Y', "YZ");
+        rules.AddRule('Z', "[-FFF][+FFF]F");
+        */
+        /* leaf */
+        /*
+        angle = 45f;
+        AleaDegree = 0.02f;
         axiom = Rule.GetRulesFromString("a");
         rules.AddRule('F', ">F<");
         rules.AddRule('a', "F[+x]Fb");
@@ -60,6 +81,29 @@ public class TestTree : MonoBehaviour {
         rules.AddRule('x', "a");
         rules.AddRule('y', "b");
         */
+        /*
+        angle = 25.7f;
+        AleaDegree = 0.0f;
+        axiom = Rule.GetRulesFromString("X");
+        rules.AddRule('X', "F[+X][-X]FX");
+        rules.AddRule('F', "FF");
+        */
+
+        /* Tree */
+        /*
+        angle = 22.5f;
+        AleaDegree = 0.01f;
+        axiom = Rule.GetRulesFromString("F");
+        rules.AddRule('F', "FF+[+F-F-F]-[-F+F+F]");
+        */
+        angle = 22.5f;
+        AleaDegree = 0.00f;
+        axiom = Rule.GetRulesFromString("A");
+        rules.AddRule('A', "[&FL!A]/////’[&FL!A]///////’[&FL!A]");
+        rules.AddRule('F', "S/////F");
+        rules.AddRule('S', "FL");
+        rules.AddRule('L', "[’’’^^{-G+G+G-|-G+G+G}]");
+
 
 
         foreach (Rule r in axiom) {
@@ -82,6 +126,8 @@ public class TestTree : MonoBehaviour {
                 Destroy(t.gameObject);
             }
             axiom = LSystem.Iterate(rules, axiom, this);
+
+            Debug.Log(axiom);
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)) {
 

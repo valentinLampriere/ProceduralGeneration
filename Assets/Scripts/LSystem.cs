@@ -4,8 +4,8 @@ using System.Text;
 using UnityEngine;
 
 public class LSystem {
-    public static List<Rule> Iterate(RuleSet rules, List<Rule> axiom, TestTree tree) {
-        List<Rule> next = new List<Rule>();
+    public static Axiom Iterate(RuleSet rules, List<Rule> axiom, TestTree tree) {
+        Axiom next = new Axiom();
         foreach (Rule r in axiom) {
             if (rules.ContainsKey(r)) {
                 foreach (Rule rn in rules[r]) {
