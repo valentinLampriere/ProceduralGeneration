@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Reduce : Rule {
     public override void Run(TestTree tree) {
-        Vector v = new Vector(tree.vector.origin, tree.vector.direction);
-        tree.sizeLine /= tree.lengthScaleFactor;
+        tree.sizeLine *= 1 / tree.lengthScaleFactor;
     }
 
     public override char Char() {

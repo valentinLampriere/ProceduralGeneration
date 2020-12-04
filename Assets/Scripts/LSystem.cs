@@ -4,11 +4,13 @@ using System.Text;
 using UnityEngine;
 
 public class LSystem {
-    public static Axiom Iterate(RuleSet rules, List<Rule> axiom, TestTree tree) {
+    public static Axiom Iterate(List<Rule> axiom, TestTree tree) {
         Axiom next = new Axiom();
         foreach (Rule r in axiom) {
-            if (rules.ContainsKey(r)) {
-                foreach (Rule rn in rules[r]) {
+            int roll = Random.Range(0, tree.allRules.Count);
+            if (tree.allRules[roll].ContainsKey(r)) {
+
+                foreach (Rule rn in tree.allRules[roll][r]) {
                     next.Add(rn);
                     rn.Run(tree);
                 }
@@ -17,6 +19,7 @@ public class LSystem {
                 r.Run(tree);
             }
         }
+
         return next;
     }
 }
