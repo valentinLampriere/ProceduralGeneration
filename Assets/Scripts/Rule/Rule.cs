@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Rule {
 
+    public virtual void PreRun(TestTree tree) { }
     public abstract void Run(TestTree tree);
     public abstract char Char();
 

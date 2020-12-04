@@ -20,8 +20,9 @@ public class Vector {
 
 public class TestTree : MonoBehaviour {
 
-    private RuleSet rules;
+    public RuleSet rules { get; set; }
     private Axiom axiom;
+    public List<Axiom> buffers;
 
     public static Dictionary<char, Rule> ExistingRules = new Dictionary<char, Rule> {
         { 'F', new DrawLine() },
@@ -36,6 +37,8 @@ public class TestTree : MonoBehaviour {
         { '&', new PitchDown() },
         { '\\', new RollLeft() },
         { '/', new RollRight() },
+        { '(', new EnterBuffer() },
+        { ')', new ExitBuffer() },
         { '?', new If() }
     };
 
@@ -43,20 +46,20 @@ public class TestTree : MonoBehaviour {
     public List<Vector> savedVectors { get; set; }
 
     public LineRenderer currentLine { get; set; }
-    //public List<LineRenderer> savedLine { get; set; }
 
     public float sizeLine = 0.5f;
     public float angle { get; set; } = 45;
     public float lengthScaleFactor = 1.36f;
 
-    //public bool enableAlea { get; set; } = true;
     public float AleaDegree { get; set; } = 0f;
+
+    public bool shouldRunStatement { get; set; } = true;
 
     void Start() {
 
         vector = new Vector();
         savedVectors = new List<Vector>();
-        //savedLine = new List<LineRenderer>();
+        buffers = new List<Axiom>();
 
         rules = new RuleSet();
         /* bushes
@@ -92,21 +95,18 @@ public class TestTree : MonoBehaviour {
         */
 
         /* Tree */
+        
         angle = 22.5f;
         AleaDegree = 0.01f;
         axiom = Rule.GetRulesFromString("F");
-        rules.AddRule('F', "FF+[+F-F-F]-[-F+F+F]");
+        rules.AddRule('F', "FF+([+F-F-F])-([-F+F+F])");
         
         /*
         angle = 22.5f;
         AleaDegree = 0.00f;
-        axiom = Rule.GetRulesFromString("A");
-        rules.AddRule('A', "[&FL!A]/////’[&FL!A]///////’[&FL!A]");
-        rules.AddRule('F', "S/////F");
-        rules.AddRule('S', "FL");
-        rules.AddRule('L', "[’’’^^{-G+G+G-|-G+G+G}]");
+        axiom = Rule.GetRulesFromString("FFFA");
+        rules.AddRule('A', "[&FFFA]^////^[&FFFA]^////^[&FFFA]");
         */
-
 
         foreach (Rule r in axiom) {
             r.Run(this);
@@ -140,9 +140,5 @@ public class TestTree : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.DownArrow)) {
 
         }
-    }
-
-    void CreateLeaf() {
-
     }
 }
