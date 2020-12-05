@@ -6,6 +6,11 @@ public class SaveState : Rule {
     public override void Run(TestTree tree) {
         Vector v = new Vector(tree.vector.origin, tree.vector.direction);
         tree.savedVectors.Add(v);
+
+
+
+        tree.sizeLine *= tree.lengthScaleFactor;
+        tree.widthLine *= tree.widthScaleFactor;
         /*GameObject line = new GameObject();
         line.transform.parent = GameObject.Find("TestTree").transform;
         LineRenderer lr = line.AddComponent<LineRenderer>();

@@ -48,9 +48,11 @@ public class TestTree : MonoBehaviour {
     public LineRenderer currentLine { get; set; }
     //public List<LineRenderer> savedLine { get; set; }
 
-    public float sizeLine = 1f;
+    public float sizeLine { get; set; } = 10f;
+    public float widthLine { get; set; } = 3.3f;
     public float angle { get; set; } = 45;
-    public float lengthScaleFactor = 1.005f;
+    public float lengthScaleFactor { get; set; } = 0.98f;
+    public float widthScaleFactor { get; set; } = 0.95f;
 
     //public bool enableAlea { get; set; } = true;
     public float AleaDegree { get; set; } = 0f;
@@ -62,39 +64,6 @@ public class TestTree : MonoBehaviour {
         //savedLine = new List<LineRenderer>();
 
         allRules = new List<RuleSet>();
-
-        rules = new RuleSet();
-        /* bushes
-        axiom = Rule.GetRulesFromString("y");
-        rules.AddRule('x', "x[-FFF][+FFF]Fx");
-        rules.AddRule('y', "yFx[+y][-y]");
-        */
-        /* bushes */
-        /*angle = 20;
-        axiom = Rule.GetRulesFromString("VZFFF");
-        rules.AddRule('V', "[+++W][---W]YV");
-        rules.AddRule('W', "+X[-W]Z");
-        rules.AddRule('X', "-W[+X]Z");
-        rules.AddRule('Y', "YZ");
-        rules.AddRule('Z', "[-FFF][+FFF]F");
-        */
-        /* leaf */
-        /*
-        angle = 45f;
-        AleaDegree = 0.02f;
-        axiom = Rule.GetRulesFromString("a");
-        rules.AddRule('F', ">F<");
-        rules.AddRule('a', "F[+x]Fb");
-        rules.AddRule('b', "F[-y]Fa");
-        rules.AddRule('x', "a");
-        rules.AddRule('y', "b");
-        */
-        /*
-        angle = 25.7f;
-        axiom = Rule.GetRulesFromString("X");
-        rules.AddRule('X', "F[+X][-X]FX");
-        rules.AddRule('F', "FF");
-        */
 
         /* Tree */
         /*
@@ -113,40 +82,17 @@ public class TestTree : MonoBehaviour {
         rules.AddRule('S', "FL");
         rules.AddRule('L', "[’’’^^{-G+G+G-|-G+G+G}]");
         */
-        angle = 28f;
-        AleaDegree = 0.00f;
-        axiom = Rule.GetRulesFromString("FFFA");
+        axiom = Rule.GetRulesFromString("T");
 
-        /*rules.AddRule('F', "F[--F+F]+F-[++F-F]F");
-        allRules.Add(rules);
-
-        rules = new RuleSet();
-        rules.AddRule('F', "F[^^F&F]&F^[&&F^F]F");
-        allRules.Add(rules);
-        */
-
+        widthLine = 6f;
+        angle = 50f;
+        widthScaleFactor = 0.97f;
 
         rules = new RuleSet();
-        rules.AddRule('F', "FF+[+F-F-F]-[-F+F+F]");
+        rules.AddRule('T', "FX");
+        rules.AddRule('X', "[F[-F+F-XF]+F+FF-FX]");
         allRules.Add(rules);
 
-        rules = new RuleSet();
-        rules.AddRule('F', "FF&[&F^F^F]^[^F&F&F]");
-        allRules.Add(rules);
-
-        rules = new RuleSet();
-        rules.AddRule('F', "FF/[/F\\F\\F]\\[\\F/F/F]");
-        allRules.Add(rules);
-
-        /*rules = new RuleSet();
-        rules.AddRule('F', "FFY[++MF][--NF][^^OF][&&PF]");
-        rules.AddRule('M', "Z-M");
-        rules.AddRule('N', "Z+N");
-        rules.AddRule('O', "Z&O");
-        rules.AddRule('P', "Z^P");
-        rules.AddRule('Y', "Z-ZY+");
-        rules.AddRule('Z', "ZZ");
-        allRules.Add(rules);*/
         foreach (Rule r in axiom) {
             r.Run(this);
         }
@@ -162,18 +108,12 @@ public class TestTree : MonoBehaviour {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            vector = new Vector();
+            /*vector = new Vector();
             foreach (Transform t in transform) {
                 Destroy(t.gameObject);
-            }
+            }*/
             axiom = LSystem.Iterate(axiom, this);
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow)) {
-
+            Debug.Log(axiom);
         }
     }
 

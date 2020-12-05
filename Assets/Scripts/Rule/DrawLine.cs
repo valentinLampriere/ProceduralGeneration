@@ -16,8 +16,9 @@ public class DrawLine : Rule {
             lineRenderer.material = new Material(Shader.Find("Particles/Standard Unlit"));
             lineRenderer.startColor = new Color(0.557f, 0.447f, 0.404f);
             lineRenderer.endColor = new Color(0.557f, 0.447f, 0.404f);
-            lineRenderer.startWidth = 0.3f;
-            lineRenderer.endWidth = 0.25f;
+            lineRenderer.widthMultiplier = tree.widthLine;
+            lineRenderer.startWidth = tree.widthLine;
+            lineRenderer.endWidth = tree.widthLine * tree.widthScaleFactor;
             tree.currentLine = lineRenderer;
         } else {
             tree.currentLine.positionCount++;
