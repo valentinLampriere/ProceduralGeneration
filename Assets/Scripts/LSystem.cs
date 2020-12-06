@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 
 public class LSystem {
+
     public static Axiom Iterate(List<Rule> axiom, Tree tree) {
         Axiom next = new Axiom();
         foreach (Rule r in axiom) {
@@ -18,7 +19,7 @@ public class LSystem {
                 r.Run(tree);
             }
         }
-
         return next;
     }
+
 }

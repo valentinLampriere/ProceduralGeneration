@@ -47,7 +47,7 @@ public class Tree : MonoBehaviour {
     public float widthLine { get; set; } = 3.3f;
     public float angle { get; set; } = 45;
     public float lengthScaleFactor { get; set; } = 0.98f;
-    public float widthScaleFactor { get; set; } = 0.95f;
+    public float widthScaleFactor { get; set; } = 0.66f;
 
     public float AleaDegree { get; set; } = 0f;
 
@@ -61,21 +61,19 @@ public class Tree : MonoBehaviour {
         axiom = Rule.GetRulesFromString("I");
 
         sizeLine = Random.Range(2f, 7.5f);
-        widthLine = Random.Range(sizeLine/3, sizeLine/1.5f);
-        /*sizeLine = Random.Range(6f, 20f);
-        widthLine = Random.Range(5f, 10f);*/
+        widthLine = Random.Range(sizeLine / 2, sizeLine * 2);
         angle = Random.Range(40f, 80f);
-        widthScaleFactor = Random.Range(0.90f, 1f);
+        widthScaleFactor = Random.Range(0.9f, 0.98f);
 
         rules = new RuleSet();
         rules.AddRule('I', "FS");
         rules.AddRule('S', "[[F-F+&SF*]F&[^F+F-FS]]");
         allRules.Add(rules);
         
-        /*rules = new RuleSet();
+        rules = new RuleSet();
         rules.AddRule('I', "FFS");
-        rules.AddRule('S', "F+&[+F&-F+F-F^F*]-[-^&F+[F-F^F&+^F*]*]");
-        allRules.Add(rules);*/
+        rules.AddRule('S', "F[+F&-F+F-F^F*][-^&F+[F-F^F&+^F*]*]");
+        allRules.Add(rules);
 
         foreach (Rule r in axiom) {
             r.Run(this);

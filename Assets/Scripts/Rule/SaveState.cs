@@ -7,8 +7,6 @@ public class SaveState : Rule {
         Vector v = new Vector(tree.vector.origin, tree.vector.direction);
         tree.savedVectors.Add(v);
 
-
-
         tree.sizeLine *= tree.lengthScaleFactor;
         tree.widthLine *= tree.widthScaleFactor;
 
