@@ -18,7 +18,7 @@ public class Vector {
     }
 }
 
-public class TestTree : MonoBehaviour {
+public class Tree : MonoBehaviour {
 
     private RuleSet rules { get; set; }
     public List<RuleSet> allRules { get; set; }
@@ -29,17 +29,11 @@ public class TestTree : MonoBehaviour {
         { 'G', new MoveForward() },
         { '+', new TurnRight() },
         { '-', new TurnLeft() },
-        { '|', new Turn() },
         { '[', new SaveState() },
         { ']', new LoadState() },
-        { '>', new Extend() },
-        { '<', new Reduce() },
         { '^', new PitchUp() },
         { '&', new PitchDown() },
-        { '\\', new RollLeft() },
-        { '/', new RollRight() },
-        { '*', new Leaf() },
-        { '?', new If() }
+        { '*', new Leaf() }
     };
 
     public GameObject leaves;
@@ -61,17 +55,8 @@ public class TestTree : MonoBehaviour {
 
         vector = new Vector();
         savedVectors = new List<Vector>();
-        //savedLine = new List<LineRenderer>();
-
+        
         allRules = new List<RuleSet>();
-
-        /* Tree */
-        /*
-        angle = 22.5f;
-        AleaDegree = 0.01f;
-        axiom = Rule.GetRulesFromString("F");
-        rules.AddRule('F', "FF+[+F-F-F]-[-F+F+F]");
-        */
 
         axiom = Rule.GetRulesFromString("I");
 
@@ -84,13 +69,13 @@ public class TestTree : MonoBehaviour {
 
         rules = new RuleSet();
         rules.AddRule('I', "FS");
-        rules.AddRule('S', "[[-F&F+F+^SF*]-F&SF+^[&F+F-FS]]");
+        rules.AddRule('S', "[[F-F+&SF*]F&[^F+F-FS]]");
         allRules.Add(rules);
         
-        rules = new RuleSet();
+        /*rules = new RuleSet();
         rules.AddRule('I', "FFS");
-        rules.AddRule('S', "F+&[+F&-F+F-F^F*]-^[-^&F+[F-F^F&+^F*]*]");
-        allRules.Add(rules);
+        rules.AddRule('S', "F+&[+F&-F+F-F^F*]-[-^&F+[F-F^F&+^F*]*]");
+        allRules.Add(rules);*/
 
         foreach (Rule r in axiom) {
             r.Run(this);
@@ -107,10 +92,7 @@ public class TestTree : MonoBehaviour {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            /*vector = new Vector();
-            foreach (Transform t in transform) {
-                Destroy(t.gameObject);
-            }*/
+
             axiom = LSystem.Iterate(axiom, this);
             Debug.Log(axiom);
         }

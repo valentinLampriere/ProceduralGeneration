@@ -6,8 +6,7 @@ public class DrawLine : Rule {
 
     public LineRenderer lr;
 
-
-    public override void Run(TestTree tree) {
+    public override void Run(Tree tree) {
 
         if (tree.currentLine == null) {
             GameObject line = new GameObject();
@@ -30,8 +29,6 @@ public class DrawLine : Rule {
         tree.currentLine.SetPosition(pos0, tree.vector.origin);
 
         tree.currentLine.SetPosition(pos1, tree.vector.origin + tree.vector.direction * tree.sizeLine + tree.vector.direction * (tree.sizeLine + Random.Range(-tree.sizeLine * tree.AleaDegree, tree.sizeLine * tree.AleaDegree)));
-        //tree.currentLine.SetPosition(pos1, Quaternion.Euler(0, 0, Random.Range(-tree.angle * tree.AleaDegree, tree.angle * tree.AleaDegree) / (tree.sizeLine * tree.sizeLine * tree.sizeLine)) * tree.currentLine.GetPosition(pos1));
-        //tree.currentLine.SetPosition(pos1, tree.vector.origin + tree.vector.direction * tree.sizeLine);
 
         tree.vector.origin = tree.currentLine.GetPosition(pos1);
     }

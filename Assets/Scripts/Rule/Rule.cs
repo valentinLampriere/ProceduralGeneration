@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Rule {
 
-    public abstract void Run(TestTree tree);
+    public abstract void Run(Tree tree);
     public abstract char Char();
 
 
@@ -12,11 +12,11 @@ public abstract class Rule {
         Axiom rules = new Axiom();
         foreach (char _c in sentence) {
             Rule r;
-            if (TestTree.ExistingRules.ContainsKey(_c)) {
-                r = TestTree.ExistingRules[_c];
+            if (Tree.ExistingRules.ContainsKey(_c)) {
+                r = Tree.ExistingRules[_c];
             } else {
                 r = new UnknownRule(_c);
-                TestTree.ExistingRules[_c] = r;
+                Tree.ExistingRules[_c] = r;
             }
             rules.Add(r);
         }
@@ -37,7 +37,7 @@ public class UnknownRule : Rule {
         c = _c;
     }
 
-    public override void Run(TestTree tree) {}
+    public override void Run(Tree tree) {}
 
     public override char Char() {
         return c;

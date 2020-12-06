@@ -9,11 +9,11 @@ public class RuleSet : Dictionary<Rule, List<Rule>> {
 
     public void AddRule(char c, string sentence) {
         Rule r;
-        if (TestTree.ExistingRules.ContainsKey(c))
-            r = TestTree.ExistingRules[c];
+        if (Tree.ExistingRules.ContainsKey(c))
+            r = Tree.ExistingRules[c];
         else {
             r = new UnknownRule(c);
-            TestTree.ExistingRules[c] = r;
+            Tree.ExistingRules[c] = r;
         }
         AddRule(r, Rule.GetRulesFromString(sentence));
     }

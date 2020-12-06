@@ -4,7 +4,7 @@ using System.Text;
 using UnityEngine;
 
 public class LSystem {
-    public static Axiom Iterate(List<Rule> axiom, TestTree tree) {
+    public static Axiom Iterate(List<Rule> axiom, Tree tree) {
         Axiom next = new Axiom();
         foreach (Rule r in axiom) {
             int roll = Random.Range(0, tree.allRules.Count);

@@ -7,7 +7,7 @@ public class Leaf : Rule {
     public LineRenderer lr;
 
 
-    public override void Run(TestTree tree) {
+    public override void Run(Tree tree) {
 
         if (tree.currentLine == null)
             return;
@@ -22,7 +22,7 @@ public class Leaf : Rule {
         AddLeaves(tree, Quaternion.Euler(0, 0, 90f), x, y, z);
     }
 
-    private void AddLeaves(TestTree tree, Quaternion offset, float x, float y, float z) {
+    private void AddLeaves(Tree tree, Quaternion offset, float x, float y, float z) {
         GameObject l = GameObject.Instantiate(tree.leaves, tree.currentLine.GetPosition(tree.currentLine.positionCount - 1), Quaternion.Euler(x, y, z) * offset);
         l.transform.localScale = new Vector3(tree.sizeLine, tree.sizeLine, tree.sizeLine);
         l.transform.parent = tree.transform.GetChild(1);
