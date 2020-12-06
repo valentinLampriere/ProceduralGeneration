@@ -20,8 +20,8 @@ public class Vector {
 
 public class TestTree : MonoBehaviour {
 
-    private RuleSet rules;
-    public List<RuleSet> allRules;
+    private RuleSet rules { get; set; }
+    public List<RuleSet> allRules { get; set; }
     private Axiom axiom;
 
     public static Dictionary<char, Rule> ExistingRules = new Dictionary<char, Rule> {
@@ -42,11 +42,12 @@ public class TestTree : MonoBehaviour {
         { '?', new If() }
     };
 
+    public GameObject leaves;
+
     public Vector vector { get; set; }
     public List<Vector> savedVectors { get; set; }
 
     public LineRenderer currentLine { get; set; }
-    //public List<LineRenderer> savedLine { get; set; }
 
     public float sizeLine { get; set; } = 10f;
     public float widthLine { get; set; } = 3.3f;
@@ -54,7 +55,6 @@ public class TestTree : MonoBehaviour {
     public float lengthScaleFactor { get; set; } = 0.98f;
     public float widthScaleFactor { get; set; } = 0.95f;
 
-    //public bool enableAlea { get; set; } = true;
     public float AleaDegree { get; set; } = 0f;
 
     void Start() {
@@ -73,24 +73,23 @@ public class TestTree : MonoBehaviour {
         rules.AddRule('F', "FF+[+F-F-F]-[-F+F+F]");
         */
 
-        /*
-        angle = 22.5f;
-        AleaDegree = 0.00f;
-        axiom = Rule.GetRulesFromString("A");
-        rules.AddRule('A', "[&FL!A]/////’[&FL!A]///////’[&FL!A]");
-        rules.AddRule('F', "S/////F");
-        rules.AddRule('S', "FL");
-        rules.AddRule('L', "[’’’^^{-G+G+G-|-G+G+G}]");
-        */
-        axiom = Rule.GetRulesFromString("T");
+        axiom = Rule.GetRulesFromString("I");
 
-        widthLine = 6f;
-        angle = 50f;
-        widthScaleFactor = 0.97f;
+        sizeLine = Random.Range(2f, 7.5f);
+        widthLine = Random.Range(sizeLine/3, sizeLine/1.5f);
+        /*sizeLine = Random.Range(6f, 20f);
+        widthLine = Random.Range(5f, 10f);*/
+        angle = Random.Range(40f, 80f);
+        widthScaleFactor = Random.Range(0.90f, 1f);
 
         rules = new RuleSet();
-        rules.AddRule('T', "FX");
-        rules.AddRule('X', "[F[-F+F-XF]+F+FF-FX]");
+        rules.AddRule('I', "FS");
+        rules.AddRule('S', "[[-F&F+F+^SF*]-F&SF+^[&F+F-FS]]");
+        allRules.Add(rules);
+        
+        rules = new RuleSet();
+        rules.AddRule('I', "FFS");
+        rules.AddRule('S', "F+&[+F&-F+F-F^F*]-^[-^&F+[F-F^F&+^F*]*]");
         allRules.Add(rules);
 
         foreach (Rule r in axiom) {

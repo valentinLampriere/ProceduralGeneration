@@ -9,20 +9,23 @@ public class Leaf : Rule {
 
     public override void Run(TestTree tree) {
 
-        GameObject line = new GameObject();
-        line.transform.parent = GameObject.Find("TestTree").transform;
-        LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
-        lineRenderer.material = new Material(Shader.Find("Particles/Standard Unlit"));
-        lineRenderer.startColor = new Color(0.345f, 0.529f, 0.086f);
-        lineRenderer.endColor = new Color(0.345f, 0.529f, 0.086f);
+        if (tree.currentLine == null)
+            return;
 
-        lineRenderer.widthCurve = AnimationCurve.Linear(0, 0.5f, 2f, .5f);
+        float x = Random.Range(0.0f, 360.0f);
+        float y = Random.Range(0.0f, 360.0f);
+        float z = Random.Range(0.0f, 360.0f);
 
-        lineRenderer.positionCount = 3;
 
-        lineRenderer.SetPosition(0, tree.vector.origin);
-        lineRenderer.SetPosition(1, tree.vector.origin + tree.vector.direction * 0.5f);
-        lineRenderer.SetPosition(2, tree.vector.origin + tree.vector.direction);
+        AddLeaves(tree, Quaternion.Euler(90f, 0, 0), x, y, z);
+        AddLeaves(tree, Quaternion.Euler(0, 90f, 0), x, y, z);
+        AddLeaves(tree, Quaternion.Euler(0, 0, 90f), x, y, z);
+    }
+
+    private void AddLeaves(TestTree tree, Quaternion offset, float x, float y, float z) {
+        GameObject l = GameObject.Instantiate(tree.leaves, tree.currentLine.GetPosition(tree.currentLine.positionCount - 1), Quaternion.Euler(x, y, z) * offset);
+        l.transform.localScale = new Vector3(tree.sizeLine, tree.sizeLine, tree.sizeLine);
+        l.transform.parent = tree.transform.GetChild(1);
     }
 
     public override char Char() {
